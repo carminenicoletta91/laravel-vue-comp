@@ -1,0 +1,29 @@
+//
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+header,footer{
+  padding:50px;
+  background-color:brown;
+}
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  .box{
+    
+    width:300px;
+    margin:10px;
+    padding:10px;
+    border-radius:5px;
+    background-color:purple;
+    p{
+      color:white;
+    }
+
+  }
+
+}
