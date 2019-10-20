@@ -3,7 +3,7 @@
 
 
     @foreach ($post -> comments as $comment)
-      <div class="box">
+      <div class="box-comment">
         <p>{{$comment -> content}}</p>
       </div>
     @endforeach

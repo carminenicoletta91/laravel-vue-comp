@@ -1,18 +1,23 @@
 <script type="text/x-template" id="pst-box">
-  <div class="box" >
+  <div class="box"  >
     <h2>@{{title}}</h2>
     <p>@{{content}}</p>
     <p >@{{getLike}}
       <span><i @click="setLiked()" v-bind:class="heartIcon"></i> </span>
       <span><i @click="setComment()"class="far fa-comment "></i></span><br>
     </p>
-      <div class="box-comment" v-show="commentbool && !savebool">
-        <input class="input-comment"v-show="commentbool && !savebool"type="text" v-model="inpval" placeholder="Inserisci Un Commento..."></input>
-        <input  class="input-pubblica"@click="saveComment()" v-show="commentbool && !savebool " type="submit" value="Pubblica">
+      <div class="box-comment" v-show="commentbool ">
+        <input class="input-comment"v-show="commentbool "type="text" v-model="inpval" placeholder="Inserisci Un Commento..."></input>
+        <input  class="input-pubblica"@click="saveComment()" v-show="commentbool " type="submit" value="Pubblica">
       </div>
-      <a  v-bind:href="urllink">
-          commenti
-      </a>
+      <a  @click="showComment()" v-show="!showcommentbool">commenti
+
+      </a><span v-show="showcommentbool" @click="hidecomments()"><i class="fas fa-minus"></i></span>
+
+        <ul id="comments" v-show="showcommentbool">
+
+        </ul>
+
   </div>
 </script>
 <script type="text/javascript">
@@ -31,9 +36,9 @@
         liked:false,
         commentbool:false,
         Postcomment:"",
-        savebool:false,
         inpval:this.value,
-        commentcontain:false,
+        comments:[],
+        showcommentbool:false
 
       };
     },
@@ -60,10 +65,30 @@
       setComment(){
         this.inpval = "";
         this.commentbool = !this.commentbool;
-        this.savebool = false;
+
+      },
+      showComment(){
+
+        this.showcommentbool = true;
+        var div =document.getElementById('comments');
+        console.log(div);
+        div.innerHTML="";
+        axios.get('/employee/showpost'+ this.id+'/comments')
+              .then(function(data) {
+
+              for (var i = 0; i < data['data'].length; i++) {
+                div.innerHTML += '<li>'+[i+1]+" "+data['data'][i]['content']+'</li>';
+                console.log(data['data'][i]['content']);
+              };})
+              .catch(function(err){console.log(err.message);})
+
+      },
+      hidecomments(){
+        this.showcommentbool = false;
       },
 
       saveComment(){
+        console.log(this.comments);
         if(this.inpval ==="" || this.inpval ===" "){
           alert("Non puoi inserie ");
         }else{
@@ -75,9 +100,8 @@
           axios.post('/employee/comment/store',comment)
                .then(function(res){console.log(res);})
                .catch(function(err){console.log(err.message);})
-          this.commentcontain = true;
-          this.Postcomment =  this.Postcomment + this.inpval;
-          this.savebool = !this.savebool;
+
+          this.Postcomment = this.inpval;
           this.commentbool = !this.commentbool;
 
         }

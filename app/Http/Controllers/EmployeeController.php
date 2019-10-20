@@ -37,11 +37,11 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $date = [
+        $data = [
           "content" =>$request['content'],
           "post_id" =>$request['post_id']
         ];
-        $comment =  Comment::create($date);
+        $comment =  Comment::create($data);
         return response() -> json($request ->all(),200);
     }
 
@@ -62,9 +62,13 @@ class EmployeeController extends Controller
 
       return view('pages.employeeshowposts',compact('employee'));
     }
-    public function showpostcomments($id){;
+    public function showpostcomments($id){
+      $data=[];
       $post = Post::findOrFail($id);
-      return view('pages.employeeshowpostcomments',compact('post'));
+      foreach ($post -> comments as $comment) {
+        $data[]=$comment;
+      }
+      return response() -> json($data);
     }
     /**
      * Show the form for editing the specified resource.
