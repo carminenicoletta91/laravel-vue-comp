@@ -2,10 +2,14 @@ require('./bootstrap');
 window.Vue=require('vue');
 var $=require('jquery');
 function init(){
-  console.log("Hello jquery");
+   token = $('meta[name="csrf-token"]').attr('content');
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
   new Vue({
-    el:'#app1',
-  
+    el:'#app1'
+
+  });
+  new Vue({
+    el:'#app2'
   });
 
 }

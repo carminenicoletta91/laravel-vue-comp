@@ -42088,9 +42088,13 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 function init() {
-  console.log("Hello jquery");
+  token = $('meta[name="csrf-token"]').attr('content');
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
   new Vue({
     el: '#app1'
+  });
+  new Vue({
+    el: '#app2'
   });
 }
 

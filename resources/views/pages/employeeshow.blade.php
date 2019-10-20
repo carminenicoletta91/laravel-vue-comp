@@ -2,9 +2,6 @@
 @section('section')
 @include('components.box-employee')
   <div id="app1">
-
-
-
       <empl-box
         :firstname='"{{$employee -> firstname}}"'
         :lastname='"{{$employee -> lastname}}"'

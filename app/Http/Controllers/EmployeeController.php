@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employee;
+use App\Post;
+use App\Comment;
 class EmployeeController extends Controller
 {
     /**
@@ -24,7 +26,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,7 +37,12 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $date = [
+          "content" =>$request['content'],
+          "post_id" =>$request['post_id']
+        ];
+        $comment =  Comment::create($date);
+        return response() -> json($request ->all(),200);
     }
 
     /**
@@ -49,7 +56,16 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         return view('pages.employeeshow',compact('employee'));
     }
+    public function showposts($id)
+    {
+      $employee =Employee::findOrFail($id);
 
+      return view('pages.employeeshowposts',compact('employee'));
+    }
+    public function showpostcomments($id){;
+      $post = Post::findOrFail($id);
+      return view('pages.employeeshowpostcomments',compact('post'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -70,7 +86,10 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $comment = Comment::findOrFail($id);
+        // $comment -> update($request -> all());
+
+
     }
 
     /**

@@ -3,18 +3,9 @@
 
 
   <div class="box">
-    @if (\Request::is('home'))
-
-    <p> @{{firstname}}<span> @{{lastname}}</span></p>
-
-    <p> @{{date_of_birth}}</p>
-    @else
-    <p> @{{firstname}}<span> @{{lastname}}</span></p>
-    <p> @{{date_of_birth}}</p>
-    <p>@{{salary}}</p>
-    @endif
-
-
+    <p>@{{firstname}} <span>@{{lastname}}</span> </p>
+    <p>@{{date_of_birth}}</p>
+    <p v-show="salary">@{{salary}}$</p>
 
   </div>
 
@@ -27,8 +18,6 @@
     lastname:String,
     date_of_birth:String,
     salary:String,
-
-
   },
 });
 </script>

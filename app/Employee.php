@@ -12,4 +12,7 @@ class Employee extends Model
       "date_of_birth",
       "salary"
     ];
+    public function posts(){
+      return $this -> hasmany(Post::class);
+    }
 }

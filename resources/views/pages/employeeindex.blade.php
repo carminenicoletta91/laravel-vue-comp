@@ -1,21 +1,17 @@
 @extends('layouts.customlayout')
 @section('section')
-@include('components.box-employee')
-
-  <div id="app1">
     @foreach ($employees as $employee)
+      <div class="box">
 
-      <a href={{route('empl.show',$employee -> id)}} class="show-link">show</a>
-      <empl-box
-        :firstname='"{{$employee -> firstname}}"'
-        :lastname='"{{$employee -> lastname}}"'
-        :date_of_birth='"{{$employee -> date_of_birth}}"'
+        <p>{{$employee -> firstname}}<span>{{$employee -> lastname}}</span></p>
+        <p>{{$employee -> date_of_birth}}</p>
+        <a href={{route('empl.posts.show',$employee -> id)}} id="shw_pst">Show Post</a>
+        <a href={{route('empl.show',$employee -> id)}} id="shw_slr">Show Salary</a>
 
-      >
+      </div>
 
-      </empl-box>
     @endforeach
-  </div>
+
 
 
 @endsection
