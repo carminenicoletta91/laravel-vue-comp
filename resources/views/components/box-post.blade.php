@@ -14,8 +14,8 @@
 
       </a><span v-show="showcommentbool" @click="hidecomments()"><i class="fas fa-minus"></i></span>
 
-        <ul id="comments" v-show="showcommentbool">
-
+        <ul  v-show="showcommentbool">
+          <li v-for="comment in comments" >@{{comment}}</li>
         </ul>
 
   </div>
@@ -68,26 +68,25 @@
 
       },
       showComments(){
-        var div = $(this.$el).children("ul#comments");
+        comments=this.comments;
         this.showcommentbool = true;
         axios.get('/employee/showpost'+ this.id+'/comments')
               .then(function(data) {
               for (var i = 0; i < data['data'].length; i++) {
-                div.append('<li>'+[i+1]+" "+data['data'][i]['content']+'</li>');
-                console.log(data['data'][i]['content']);
+                comments.push(data['data'][i]['content']);
               }
+
               })
               .catch(function(err){console.log(err.message);})
 
       },
       hidecomments(){
-        var div = $(this.$el).children("ul#comments").children();
-        div.remove();
+        this.comments=[],
         this.showcommentbool = false;
       },
 
       saveComment(){
-        console.log(this.comments);
+        
         if(this.inpval ==="" || this.inpval ===" "){
           alert("Non puoi inserie ");
         }else{
