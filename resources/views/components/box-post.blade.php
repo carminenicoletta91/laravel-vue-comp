@@ -10,7 +10,7 @@
         <input class="input-comment"v-show="commentbool "type="text" v-model="inpval" placeholder="Inserisci Un Commento..."></input>
         <input  class="input-pubblica"@click="saveComment()" v-show="commentbool " type="submit" value="Pubblica">
       </div>
-      <a  @click="showComment()" v-show="!showcommentbool">commenti
+      <a class="commentlink" @click="showComments()" v-show="!showcommentbool">commenti
 
       </a><span v-show="showcommentbool" @click="hidecomments()"><i class="fas fa-minus"></i></span>
 
@@ -67,23 +67,22 @@
         this.commentbool = !this.commentbool;
 
       },
-      showComment(){
-
+      showComments(){
+        var div = $(this.$el).children("ul#comments");
         this.showcommentbool = true;
-        var div =document.getElementById('comments');
-        console.log(div);
-        div.innerHTML="";
         axios.get('/employee/showpost'+ this.id+'/comments')
               .then(function(data) {
-
               for (var i = 0; i < data['data'].length; i++) {
-                div.innerHTML += '<li>'+[i+1]+" "+data['data'][i]['content']+'</li>';
+                div.append('<li>'+[i+1]+" "+data['data'][i]['content']+'</li>');
                 console.log(data['data'][i]['content']);
-              };})
+              }
+              })
               .catch(function(err){console.log(err.message);})
 
       },
       hidecomments(){
+        var div = $(this.$el).children("ul#comments").children();
+        div.remove();
         this.showcommentbool = false;
       },
 

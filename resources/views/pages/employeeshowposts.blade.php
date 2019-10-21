@@ -19,7 +19,7 @@
         :title='"{{$post -> title}}"'
         :content='"{{$post -> content}}"'
         :likes='{{$post -> likes}}'
-        :urllink='"{{route('empl.postcomm.show',$post -> id)}}"'
+        {{-- :urllink='"{{route('empl.postcomm.show',$post -> id)}}"' --}}
       >
       </pst-box>
 

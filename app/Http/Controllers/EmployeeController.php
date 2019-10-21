@@ -36,12 +36,12 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $data = [
-          "content" =>$request['content'],
-          "post_id" =>$request['post_id']
-        ];
-        $comment =  Comment::create($data);
+    {   $validateData=$request -> validate([
+        "content" =>"required",
+        "post_id" =>"required"
+        ]);
+      
+        $comment =  Comment::create($validateData);
         return response() -> json($request ->all(),200);
     }
 
